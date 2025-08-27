@@ -32,6 +32,20 @@ This repository contains a **React.js** application designed to function as a **
 
 - **REST API Calls**: The application uses fetch or a similar library to handle HTTP requests to the FHIR server.
 
+```
+Basic Patients Resources CRUD (Create, Read, Update, Delete) operation
+
+Operations on Patient resources by interacting with a FHIR server API.
+
+App uses https://fhir-bootcamp.medblocks.com/fhir for API calls. see link for more details https://medblocks.com/training/courses/fhir-fundamentals.
+
+To get started with hapi-fhir-jpaserver-starter, you can find helpful guides here https://github.com/hapifhir/hapi-fhir-jpaserver-starter
+- Running via Docker Hub
+Each tagged/released version of hapi-fhir-jpaserver is built as a Docker image and published to Docker hub. To run the published Docker image from DockerHub:
+  - docker pull hapiproject/hapi:latest
+  - docker run -p 8080:8080 hapiproject/hapi:latest
+```
+
 ## How to Run
 Clone the repository.
 

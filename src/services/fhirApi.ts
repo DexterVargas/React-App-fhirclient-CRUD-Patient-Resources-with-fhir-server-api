@@ -1,6 +1,8 @@
 import type { FHIRPatient, FHIRBundle, CreatePatientData } from "../types/fhir";
 
-const FHIR_BASE_URL = 'https://fhir-bootcamp.medblocks.com/fhir';
+// const FHIR_BASE_URL = 'https://fhir-bootcamp.medblocks.com/fhir';
+const FHIR_BASE_URL = 'http://localhost:8080/fhir';
+
 
 export class FHIRApiService {
     private async request<T>(
