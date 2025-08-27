@@ -2,17 +2,20 @@ import './App.css'
 
 import PatientTable from '@/components/PatientTable'
 import Header from '@/shared/Header'
+import Banner from '@/shared/Banner'
+import Footer from './shared/Footer'
 
 function App() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
     
       <Header />
-     
-        <main className="p-6">
-          <PatientTable />
-        </main>
-    </> 
+      <Banner />
+      <main className="flex-1 p-6">
+        <PatientTable />
+      </main>
+      <Footer />
+    </div> 
     
     )
 }
