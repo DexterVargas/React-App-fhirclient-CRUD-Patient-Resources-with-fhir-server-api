@@ -50,7 +50,7 @@ export class FHIRApiService {
         }
 
         const queryString = params.toString();
-        const endpoint = `/Patient${queryString ? `?${queryString}` : ''}`;
+        const endpoint = `/Patient${queryString ? `?${queryString}` : '?_count=100'}`;
         
         return this.request<FHIRBundle>(endpoint);
     }
