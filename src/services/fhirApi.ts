@@ -1,7 +1,7 @@
 import type { FHIRPatient, FHIRBundle, CreatePatientData } from "../types/fhir";
 
-// const FHIR_BASE_URL = 'https://fhir-bootcamp.medblocks.com/fhir';
-const FHIR_BASE_URL = 'http://localhost:8080/fhir';
+const FHIR_BASE_URL = 'https://fhir-bootcamp.medblocks.com/fhir';
+// const FHIR_BASE_URL = 'http://localhost:8080/fhir';
 
 
 export class FHIRApiService {
@@ -164,12 +164,34 @@ export class FHIRApiService {
                 });
             }
         }
+        
+        // Update address
+        const newUpdatedPatient = {
+            ...updatedPatient,
+            address:
+                    patientData.address?.line ||
+                    patientData.address?.city ||
+                    patientData.address?.state ||
+                    patientData.address?.postalCode ||
+                    patientData.address?.country
+                ? patientData.address
+                : updatedPatient.address,
+        };
 
-        console.log(JSON.stringify(updatedPatient));
+        if (patientData.address?.line) {
+            // Ensure updatedPatient.address exists
+            if (!newUpdatedPatient.address) {
+                newUpdatedPatient.address = [{line:[]}];
+                newUpdatedPatient.address?.[0].line?.push(patientData.address.line)
+            }
+            
+        }
+
+        console.log(JSON.stringify(newUpdatedPatient));
         
         return this.request<FHIRPatient>(`/Patient/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(updatedPatient),
+        body: JSON.stringify(newUpdatedPatient),
         });
     }
 

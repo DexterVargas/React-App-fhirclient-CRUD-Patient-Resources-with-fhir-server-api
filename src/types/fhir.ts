@@ -64,34 +64,34 @@ export interface FHIRPatient {
 }
 
 export interface FHIRBundle {
-  resourceType: 'Bundle';
-  id?: string;
-  type: 'searchset' | 'collection' | 'batch' | 'transaction';
-  total?: number;
-  entry?: Array<{
-    fullUrl?: string;
-    resource: FHIRPatient;
-    search?: {
-      mode?: string;
-    };
-  }>;
+    resourceType: 'Bundle';
+    id?: string;
+    type: 'searchset' | 'collection' | 'batch' | 'transaction';
+    total?: number;
+    entry?: Array<{
+        fullUrl?: string;
+        resource: FHIRPatient;
+        search?: {
+          mode?: string;
+        };
+    }>;
 }
 
 export interface CreatePatientData {
-  id?:string;
-  firstName: string;
-  lastName: string;
-  gender: 'male' | 'female' | 'other' | 'unknown';
-  birthDate: string;
-  phone?: string;
-  email?: string;
-  address?: {
-    line?: string;
-    city?: string;
-    state?: string;
-    postalCode?: string;
-    country?: string;
-  };
+    id?:string;
+    firstName: string;
+    lastName: string;
+    gender: 'male' | 'female' | 'other' | 'unknown';
+    birthDate: string;
+    phone?: string;
+    email?: string;
+    address?: {
+        line?: string;
+        city?: string;
+        state?: string;
+        postalCode?: string;
+        country?: string;
+    };
 }
 
 // export interface UpdatePatientData extends CreatePatientData {

@@ -62,7 +62,14 @@ export default function PatientTable() {
             lastName: patient.name?.[0]?.family || "",
             gender: patient.gender ?? "unknown",
             birthDate: patient.birthDate || "",
-            // telecom & address parsing can be added here
+            phone: patient.telecom?.find(p => p.system ==='phone')?.value,
+            email: patient.telecom?.find(e => e.system ==='email')?.value,
+            address: { 
+                line: String(patient?.address?.[0].line ?? "") , 
+                city: patient?.address?.[0].city, 
+                state: patient?.address?.[0].state, 
+                postalCode: patient?.address?.[0].postalCode, 
+                country: patient?.address?.[0].country }
         });
         setIsFormOpen(true);
         await fetchPatients();
@@ -135,46 +142,53 @@ export default function PatientTable() {
                 <th className="p-2 border">Name</th>
                 <th className="p-2 border">Gender</th>
                 <th className="p-2 border">Birth Date</th>
+                <th className="p-2 border">Email</th>
+                <th className="p-2 border">Phone#</th>
+                <th className="p-2 border">Address</th>
                 <th className="p-2 border">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {patients.map((patient) => (
-                <tr key={patient.id} className="hover:bg-gray-50">
-                  <td className="p-2 border">{patient.id}</td>
-                  <td className="p-2 border">
-                    {patient.name?.[0]?.given?.[0]} {patient.name?.[0]?.family}
-                  </td>
-                  <td className="p-2 border">{patient.gender}</td>
-                  <td className="p-2 border">{patient.birthDate}</td>
-                  <td className="p-2 border">
-                    <div className="flex gap-2">
-                        <Button 
-                            size="sm" 
-                            variant="ghost" 
-                            className="text-blue-600 hover:text-blue-800 size-8"
-                            onClick={() => handleView(patient.id!)}>
-                            <Eye size={16} />
+              { patients.map((patient) =>(
+                    <tr key={patient.id} className="hover:bg-gray-50">
+                    <td className="p-2 border">{patient.id}</td>
+                    <td className="p-2 border">
+                        {patient.name?.[0]?.given?.[0]} {patient.name?.[0]?.family}
+                    </td>
+                    <td className="p-2 border">{patient.gender}</td>
+                    <td className="p-2 border">{patient.birthDate}</td>
+                    <td className="p-2 border">{patient?.telecom?.find(t => t.system ==='email')?.value}</td>
+                    <td className="p-2 border">{patient?.telecom?.find(t => t.system ==='phone')?.value}</td>
+                    <td className="p-2 border">{patient?.address?.[0].line}-{patient?.address?.[0].city}-{patient?.address?.[0].country}-{patient?.address?.[0].state}-{patient?.address?.[0].postalCode}</td>
+                    <td className="p-2 border">
+                        <div className="flex gap-2">
+                            <Button 
+                                size="sm" 
+                                variant="ghost" 
+                                className="text-blue-600 hover:text-blue-800 size-8"
+                                onClick={() => handleView(patient.id!)}>
+                                <Eye size={16} />
+                            </Button>
+                            <Button 
+                                size="sm" 
+                                variant="ghost" 
+                                onClick={() => handleEdit(patient)}
+                                className="text-green-600 hover:text-green-800 size-8">
+                            <Pencil size={16} />
                         </Button>
-                        <Button 
-                            size="sm" 
-                            variant="ghost" 
-                            onClick={() => handleEdit(patient)}
-                            className="text-green-600 hover:text-green-800 size-8">
-                        <Pencil size={16} />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => handleDelete(patient.id)}
-                        className="text-red-600 hover:text-red-800 size-8"
-                      >
-                        <Trash size={16} />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                        <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDelete(patient.id)}
+                            className="text-red-600 hover:text-red-800 size-8"
+                        >
+                            <Trash size={16} />
+                        </Button>
+                        </div>
+                    </td>
+                    </tr>
+                )
+              )}
               {patients.length === 0 && (
                 <tr>
                   <td colSpan={5} className="p-4 text-center text-gray-500">
